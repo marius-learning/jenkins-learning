@@ -32,6 +32,12 @@ pipeline {
                 sh 'docker push $DOCKERHUB_CREDS_USR/$DOCKERHUB_REPO:$BUILD_NUMBER'
             }
         }
+
+        stage('Trigger downstream_job') {
+            steps {
+                build 'downstream_job'
+            }
+        }
     }
     post {
         always {
