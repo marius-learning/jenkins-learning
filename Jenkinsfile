@@ -35,7 +35,7 @@ pipeline {
 
         stage('Trigger downstream_job') {
             steps {
-                build 'downstream_job'
+                build job: 'downstream_job', parameters: [string(name: 'IMAGE_TAG', value: env.BUILD_NUMBER)]
             }
         }
     }
