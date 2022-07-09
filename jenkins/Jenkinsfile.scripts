@@ -20,9 +20,8 @@ pipeline {
         }
         stage('Call Script') {
             steps {
-                sh 'cd ./scripts'
-                sh 'chmod +x script.sh'
-                sh "./script.sh ${TOPIC_NAME} ${TARGET}"
+                sh 'chmod +x ./scripts/script.sh'
+                sh "./scripts/script.sh ${TOPIC_NAME} ${TARGET}"
             }
         }
     }
