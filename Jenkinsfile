@@ -4,7 +4,7 @@ pipeline {
     environment {
         DOCKERHUB_REPO='flask-app'
         GITHUB_REPO='jenkins-learning'
-        DOCKERHUB_CREDS = credentials('dockerhub')
+        DOCKERHUB_CREDS = credentials('DOCKERHUB')
     }
 
     stages {
