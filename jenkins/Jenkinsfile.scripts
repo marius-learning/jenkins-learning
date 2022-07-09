@@ -12,12 +12,13 @@ pipeline {
     }
 
     stages {
-        stage('Clone Repo') {
-            steps {
-                git branch: 'main', url: "https://github.com/${GITHUB_CREDS_USR}/${GITHUB_REPO}"
-                sh 'ls *'
-            }
-        }
+        //! If the Jenkinsfile is pointed to a Git Repository, the Repository is automatically cloned
+        // stage('Clone Repo') {
+        //     steps {
+        //         git branch: 'main', url: "https://github.com/${GITHUB_CREDS_USR}/${GITHUB_REPO}"
+        //         sh 'ls *'
+        //     }
+        // }
         stage('Call Script') {
             steps {
                 sh 'chmod +x ./scripts/script.sh'
