@@ -36,6 +36,7 @@ pipeline {
     post {
         always {
             sh 'docker logout'
+            sh 'docker image prune --fileter label=app=flask'
         }
     }
 }

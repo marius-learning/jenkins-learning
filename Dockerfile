@@ -1,5 +1,7 @@
 FROM python:3.8-slim-buster
 
+LABEL app="flask"
+
 WORKDIR /app
 
 COPY requirements.txt requirements.txt
