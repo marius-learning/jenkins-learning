@@ -1,13 +1,16 @@
 pipeline {
     agent any
+
     environment {
-        DOCKERHUB_CREDS = credentials('dockerhub')
         DOCKERHUB_REPO='flask-app'
+        GITHUB_REPO='jenkins-learning'
+        DOCKERHUB_CREDS = credentials('dockerhub')
     }
 
     stages {
         stage('Clone Repo') {
             steps {
+                git branch: 'main', url: "https://github.com/marius-learning/${GITHUB_REPO}"
                 sh 'ls *'
             }
         }
