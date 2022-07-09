@@ -22,7 +22,7 @@ pipeline {
         stage('Call Script') {
             steps {
                 sh 'chmod +x ./scripts/script.sh'
-                sh "./scripts/script.sh ${TOPIC_NAME} ${TARGET}"
+                sh "./scripts/script.sh '${TOPIC_NAME}' '${TARGET}'"
             }
         }
     }
