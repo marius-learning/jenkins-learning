@@ -1,0 +1,29 @@
+pipelines {
+    agent any
+
+    environment {
+        GITHUB_REPO='jenkins-learning'
+        GITHUB_CREDS=credentials('GITHUB')
+    }
+
+    parameters {
+        string(name: "TARGET", defaultValue: "Dream-Job", description: "Target goal")
+        string(name: 'TOPIC_NAME', defaultValue: "DevOps", description: "Topic to learn")
+    }
+
+    stages {
+        stage('Clone Repo') {
+            steps {
+                git branch: 'main', url: "https://github.com/${GITHUB_CREDS_USR}/${GITHUB_REPO}"
+                sh 'ls *'
+            }
+        }
+        stage('Call Script') {
+            steps {
+                sh 'cd ./scripts'
+                sh 'chmod +x script.sh'
+                sh "./script.sh ${TOPIC_NAME} ${TARGET}"
+            }
+        }
+    }
+}
