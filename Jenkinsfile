@@ -17,7 +17,7 @@ pipeline {
 
         stage('Build Image') {
             steps {
-                sh 'docker build -t $DOCKERHUB_CREDS_USR/$DOCKERHUB_REPO:$BUILD_NUMBER . --no-cache'
+                sh 'docker build -t $DOCKERHUB_CREDS_USR/$DOCKERHUB_REPO:$BUILD_NUMBER .'
             }
         }
 
@@ -36,7 +36,7 @@ pipeline {
     post {
         always {
             sh 'docker logout'
-            sh 'docker image prune --fileter label=app=flask'
+            sh 'docker image prune --fileter "label=app=flask"'
         }
     }
 }
