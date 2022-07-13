@@ -25,8 +25,7 @@ pipeline {
                         echo 'Building...'
                         sleep 10
                         echo 'Built'
-                    }
-
+                    },
                     deploy: {
                         echo 'Deploying...'
                         sleep 2
