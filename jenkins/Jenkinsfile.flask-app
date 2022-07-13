@@ -8,12 +8,12 @@ pipeline {
     }
 
     stages {
-        stage('Clone Repo') {
-            steps {
-                git branch: 'main', url: "https://github.com/marius-learning/${GITHUB_REPO}"
-                sh 'ls *'
-            }
-        }
+        // stage('Clone Repo') {
+        //     steps {
+        //         git branch: 'main', url: "https://github.com/marius-learning/${GITHUB_REPO}"
+        //         sh 'ls *'
+        //     }
+        // }
 
         stage('Build Image') {
             steps {
