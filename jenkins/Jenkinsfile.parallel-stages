@@ -20,7 +20,7 @@ pipeline {
         }
         stage('Build & Deploy') {
             steps {
-                parallel {
+                parallel (
                     build: {
                         echo 'Building...'
                         sleep 10
@@ -32,7 +32,7 @@ pipeline {
                         sleep 2
                         echo 'Deploy'
                     }
-                }
+                )
             }
         }
     }
