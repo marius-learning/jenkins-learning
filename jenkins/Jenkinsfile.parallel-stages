@@ -18,16 +18,19 @@ pipeline {
                 }
             }
         }
-        stage('Build') {
-            steps {
-                sleep 5
-                echo 'Building'
-            }
-        }
-        stage('Deploy') {
-            steps {
-                sleep 5
-                echo 'Deploying'
+        stage('Build & Deploy') {
+            parallel {
+                steps {
+                    echo 'Building...'
+                    sleep 10
+                    echo 'Built'
+                }
+
+                steps {
+                    echo 'Deploying...'
+                    sleep 2
+                    echo 'Deploy'
+                }
             }
         }
     }
