@@ -10,8 +10,8 @@ pipeline {
             }
             steps {
                 sh 'python -m py_compile add-app/add2vals.py add-app/calc.py'
-                stash(name: 'compiled-results', includes :'*.py*')
-                sh 'ls -l'
+                stash(name: 'compiled-results', includes :'add-app/*.py*')
+                sh 'ls -l add-app'
             }
         }
         
@@ -24,11 +24,6 @@ pipeline {
             steps {
                 sh 'py.test --junit-xml test-reports/results.xml add-app/test_calc.py'
                 sh 'cat test-reports/results.xml'
-            }
-            post {
-                always {
-                    junit 'test-reports/results.xml'
-                }
             }
         }
     }
