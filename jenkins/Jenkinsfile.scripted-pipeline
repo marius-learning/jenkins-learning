@@ -7,7 +7,7 @@ pipeline {
 
     environment {
         DOCKER_CREDS_KEY = "DOCKERHUB"
-        DOCKERHUB_REGISTRY_URL = "registry.hub.docker.com"
+        DOCKERHUB_REGISTRY_URL = "https://registry.hub.docker.com"
     }
 
     stages {
