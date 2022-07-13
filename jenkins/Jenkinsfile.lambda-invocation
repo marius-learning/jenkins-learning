@@ -7,12 +7,13 @@ pipeline {
 
     parameters {
         string(name: "LAMBDA_FUNCTION_NAME", description: "AWS Lambda Function Name")
+        string(name: 'AWS_REGION', defaultValue: 'us-west-2', description: "AWS Region Name")
     }
 
     stages {
         stage('Invoke Lambda Function') {
             steps {
-                sh "aws lambda invoke --function-name '$LAMBDA_FUNCTION_NAME' $LAMBDA_RESULTS_FILE"
+                sh "aws lambda invoke --function-name '$LAMBDA_FUNCTION_NAME' --region '$AWS_REGION' $LAMBDA_RESULTS_FILE"
             }
         }
         stage('Show Invokation Results') {
