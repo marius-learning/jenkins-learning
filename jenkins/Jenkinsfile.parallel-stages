@@ -19,17 +19,19 @@ pipeline {
             }
         }
         stage('Build & Deploy') {
-            parallel {
-                steps {
-                    echo 'Building...'
-                    sleep 10
-                    echo 'Built'
-                }
+            steps {
+                parallel {
+                    build: {
+                        echo 'Building...'
+                        sleep 10
+                        echo 'Built'
+                    }
 
-                steps {
-                    echo 'Deploying...'
-                    sleep 2
-                    echo 'Deploy'
+                    deploy: {
+                        echo 'Deploying...'
+                        sleep 2
+                        echo 'Deploy'
+                    }
                 }
             }
         }
