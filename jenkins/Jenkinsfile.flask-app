@@ -42,7 +42,7 @@ pipeline {
     post {
         always {
             sh 'docker logout'
-            sh 'docker rmi $(docker images --filter "label=app=flask" -q)'
+            sh 'docker rmi $(docker images --filter "label=app=flask" -q) -f'
         }
     }
 }
