@@ -11,6 +11,11 @@ pipeline {
     }
 
     stages {
+        stage('Manual Approval') {
+            steps {
+                input message: "Invoke $LAMBDA_FUNCTION_NAME? (Click 'Proceed' to continue)"
+            }
+        }
         stage('Invoke Lambda Function') {
             steps {
                 sh "aws lambda invoke --function-name '$LAMBDA_FUNCTION_NAME' --region '$AWS_REGION' $LAMBDA_RESULTS_FILE"
