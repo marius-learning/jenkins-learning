@@ -1,0 +1,32 @@
+pipeline {
+    agent any
+
+    parameters {
+        string(name: "IMAGE_NAME", description: "Image Name")
+    }
+
+    environment {
+        DOCKER_CREDS_KEY = "DOCKERHUB"
+        DOCKERHUB_REGISTRY_URL = "registry.hub.docker.com"
+    }
+
+    stages {
+        stage('Build') {
+            steps {
+                echo 'Building Container Image'
+                script {
+                    app = docker.build("$IMAGE_NAME", ".")
+                }
+            }
+        }
+        stage('Push') {
+            steps {
+                script {
+                    docker.withRegistry("$DOCKERHUB_REGISTRY_URL", "$DOCKER_CREDS_KEY") {
+                        app.push("$env.BUILD_NUMBER")
+                    }
+                }
+            }
+        }
+    }
+}
