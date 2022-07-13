@@ -18,5 +18,17 @@ pipeline {
                 }
             }
         }
+        stage('Build') {
+            steps {
+                sleep 5
+                echo 'Building'
+            }
+        }
+        stage('Deploy') {
+            steps {
+                sleep 5
+                echo 'Deploying'
+            }
+        }
     }
 }
