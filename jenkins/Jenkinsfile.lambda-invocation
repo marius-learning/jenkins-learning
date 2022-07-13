@@ -1,0 +1,24 @@
+pipeline {
+    agent any
+
+    environment {
+        LAMBDA_RESULTS_FILE= 'lambda-invokation-result.txt'
+    }
+
+    parameters {
+        string(name: "LAMBDA_FUNCTION_NAME", description: "AWS Lambda Function Name")
+    }
+
+    stages {
+        stage('Invoke Lambda Function') {
+            steps {
+                sh "aws lambda invoke --function-name '$LAMBDA_FUNCTION_NAME' $LAMBDA_RESULTS_FILE"
+            }
+        }
+        stage('Show Invokation Results') {
+            steps {
+                sh "cat $LAMBDA_RESULTS_FILE"
+            }
+        }
+    }
+}
