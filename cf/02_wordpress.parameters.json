@@ -4,6 +4,6 @@
   "InstanceType=t2.micro",
   "SSHLocation=0.0.0.0/0",
   "KeyName=oregon-ssh-key",
-  "DBRootPassword=root+password",
-  "DBPassword=wordpress+password"
+  "DBRootPassword=root1password",
+  "DBPassword=wordpress1password"
 ]
