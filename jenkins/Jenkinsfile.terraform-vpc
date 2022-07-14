@@ -1,0 +1,30 @@
+pipeline {
+    agent any
+
+    stages {
+        stage("Terraform Privision") {
+            steps {
+                sh """
+                    cd terraform
+                    terraform init
+                    terraform plan
+                    terraform apply --auto-approve
+                """
+                sh "pwd"
+            }
+        }
+        stage("Remove Resources") {
+            steps {
+                input message: "Destroy terraform resources?"
+            }
+        }
+        stage("Search & Destroy") {
+            steps {
+                sh """
+                    cd terraform
+                    terraform destroy --auto-approve
+                """
+            }
+        }
+    }
+}
