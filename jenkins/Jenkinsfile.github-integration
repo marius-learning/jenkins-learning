@@ -1,10 +1,16 @@
 pipeline {
     agent any
 
+    parameters {
+        string(name:"AWS_REGION", defaultValue: "us-west-2", description: "AWS Region used to deploy infrastructure resources")
+        string(name: "CF_STACK_NAME", defaultValue: "s3Bucket", description: "Name of CF Stack")
+    }
+
     stages {
         stage('Submit Template') {
             steps {
-                sh 'cat cf/01_s3.template.yml'
+                // sh 'cat cf/01_s3.template.yml'
+                sh "aws cloudformation create-stack --stack-name $CF_STACK_NAME --template-body file://cf/01_s3.template.yml --region $AWS_REGION"
             }
         }
     }
