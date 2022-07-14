@@ -1,10 +1,18 @@
 pipeline {
     agent any
 
+    parameters {
+        string(name: "STACK_NAME", defaultValue: "wordpress-stack", description: "CF Stack Name")
+        choice(name: "AWS_REGION", choices: [" ", "us-east-1", "us-east-2", "us-west-2"], description: "AWS Account Region")
+        string(name: "TEMPLATE_FILE_NAME", defaultValue: "cf/02_wordpress.template.json", description: "Path to CF template file")
+        string(name: "TEMPLATE_FILE_PARAMETERS", defaultValue: "cf/02_wordpress.parameters.json", description: "Path to CF template parameters file")
+    }
+
     stages {
         stage('Submit CF Template') {
             steps {
-                sh 'cat 02_wordpress.template.json'
+                sh "cat 02_wordpress.template.json"
+                // sh "aws cloudformation deploy --stack-name $STACK_NAME --template-file $TEMPLATE_FILE_NAME --region $AWS_REGION --parameter-overrides file://$TEMPLATE_FILE_PARAMETERS"
             }
         }
     }
