@@ -1,0 +1,8 @@
+AWSTemplateFormatVersion: "2010-09-09"
+Description: "Template used to create a S3 Bucket"
+
+Resources:
+  Type: "AWS::S3::Bucket"
+  Properties:
+    BucketName: !Sub "jenkins-devops-course-${AWS::AccountId}"
+    Description: "S3 Bucket used in Jenkins DevOps course"

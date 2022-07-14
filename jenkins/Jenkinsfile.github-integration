@@ -1,0 +1,11 @@
+pipeline {
+    agent any
+
+    stages {
+        stage('Submit Template') {
+            steps {
+                sh 'cat cf/01_s3.template.yml'
+            }
+        }
+    }
+}
