@@ -15,5 +15,15 @@ pipeline {
                 sh "aws cloudformation deploy --stack-name $STACK_NAME --template-file $TEMPLATE_FILE_NAME --region $AWS_REGION --parameter-overrides file://$TEMPLATE_FILE_PARAMETERS"
             }
         }
+        stage("Shoul remove the Stack") {
+            steps {
+                input message: "Remove Stack $STACK_NAME"
+            }
+        }
+        stage("Delete Stack") {
+            steps {
+                sh "aws cloudformation delete-stack --stack-name $STACK_NAME --region $AWS_REGION"
+            }
+        }
     }
 }
