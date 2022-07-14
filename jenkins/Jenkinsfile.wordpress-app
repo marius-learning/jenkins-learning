@@ -12,7 +12,7 @@ pipeline {
         stage('Submit CF Template') {
             steps {
                 sh "cat cf/02_wordpress.template.json"
-                // sh "aws cloudformation deploy --stack-name $STACK_NAME --template-file $TEMPLATE_FILE_NAME --region $AWS_REGION --parameter-overrides file://$TEMPLATE_FILE_PARAMETERS"
+                sh "aws cloudformation deploy --stack-name $STACK_NAME --template-file $TEMPLATE_FILE_NAME --region $AWS_REGION --parameter-overrides file://$TEMPLATE_FILE_PARAMETERS"
             }
         }
     }
