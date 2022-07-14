@@ -6,4 +6,3 @@ Resources:
     Type: "AWS::S3::Bucket"
     Properties:
       BucketName: !Sub "jenkins-devops-course-${AWS::AccountId}"
-      Description: "S3 Bucket used in Jenkins DevOps course"
