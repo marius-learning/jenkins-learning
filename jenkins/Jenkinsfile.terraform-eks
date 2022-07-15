@@ -1,0 +1,44 @@
+pipeline {
+    agent any
+
+    environment {
+        GITHUB_BRANCH="main"
+        TERRAFORM_TEMPLATE_FOLDER='examples/eks-cluster-with-new-vpc'
+        GITHUB_REPO='https://github.com/aws-ia/terraform-aws-eks-blueprints'
+    }
+
+    parameters {
+        choice(name: "AWS_REGION", choices:[" ", "us-west-2"], description: "AWS Region")
+    }
+
+    stages {
+        stage("Clone Repo") {
+            git branch: "$GITHUB_BRANCH", url: "$GITHUB_REPO"
+        }
+
+        stage("Provision Infrastructure") {
+            steps {
+                sh """
+                    export AWS_REGION=$AWS_REGION
+                    cd $TERRAFORM_TEMPLATE_FOLDER
+                    terraform init
+                    terraform plan
+                    terraform apply --auto-approve
+                """
+            }
+        }
+        stage("Destroy Infrastructure?") {
+            steps {
+                input message: "Destroy Infrastructure?"
+            }
+        }
+        stage("Destroy") {
+            steps {
+                sh """
+                    cd $TERRAFORM_TEMPLATE_FOLDER
+                    terraform destroy --auto-approve
+                """
+            }
+        }
+    }
+}
