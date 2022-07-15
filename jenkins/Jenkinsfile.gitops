@@ -32,7 +32,7 @@ pipeline {
         }
         stage("Trigger Manifest Update") {
             steps {
-                build job: 'update_manifest', parameters: [string(name: 'IMAGE_TAG', value: "${env.BUILD_NUMBER}")]
+                build job: 'flask-app-gitops', parameters: [string(name: 'IMAGE_TAG', value: "${env.BUILD_NUMBER}")]
             }
         }
     }
