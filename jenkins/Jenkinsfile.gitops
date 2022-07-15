@@ -16,23 +16,17 @@ pipeline {
         }
         stage("DockerHub Login") {
             steps {
-                sh """
-                    echo $DOCKERHUB_CREDS_PSW | docker login -u $DOCKERHUB_CREDS_USR --password-stdin
-                """
+                sh "echo $DOCKERHUB_CREDS_PSW | docker login -u $DOCKERHUB_CREDS_USR --password-stdin"
             }
         }
         stage("Push Image to DockerHub") {
             steps {
-                sh """
-                    docker push $DOCKERHUB_CREDS_USR:$env.BUILD_NUMBER
-                """
+                sh 'docker push $DOCKERHUB_CREDS_USR:$env.BUILD_NUMBER'
             }
         }
         stage("Delete Built Image") {
             steps {
-                sh """
-                    docker rmi $(docker image -f "app=flask" -q)
-                """
+                sh 'docker rmi $(docker image -f "app=flask" -q)'
             }
         }
         stage("Trigger Manifest Update") {
