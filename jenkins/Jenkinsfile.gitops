@@ -24,7 +24,7 @@ pipeline {
         }
         stage("Delete Built Image") {
             sh """
-                docker rmi $(docker image -f "app=flask")
+                docker rmi $(docker image -f "app=flask" -q)
             """
         }
         stage("Trigger Manifest Update") {
