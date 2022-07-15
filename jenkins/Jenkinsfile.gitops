@@ -10,7 +10,7 @@ pipeline {
             steps {
                 sh """
                     cd gitops
-                    docker build -t $DOCKERHUB_CREDS_USR:$env.BUILD_NUMBER . --no-cache
+                    docker build -t $DOCKERHUB_CREDS_USR:${env.BUILD_NUMBER} . --no-cache
                 """
             }
         }
