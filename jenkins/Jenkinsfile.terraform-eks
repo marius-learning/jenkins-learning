@@ -13,9 +13,10 @@ pipeline {
 
     stages {
         stage("Clone Repo") {
-            git branch: "$GITHUB_BRANCH", url: "$GITHUB_REPO"
+            steps {
+                git branch: "$GITHUB_BRANCH", url: "$GITHUB_REPO"
+            }
         }
-
         stage("Provision Infrastructure") {
             steps {
                 sh """
