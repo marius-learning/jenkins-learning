@@ -21,7 +21,7 @@ pipeline {
         }
         stage("Push Image to DockerHub") {
             steps {
-                sh 'docker push $DOCKERHUB_CREDS_USR:$env.BUILD_NUMBER'
+                sh "docker push $DOCKERHUB_CREDS_USR:${env.BUILD_NUMBER}"
             }
         }
         stage("Delete Built Image") {
@@ -31,7 +31,7 @@ pipeline {
         }
         stage("Trigger Manifest Update") {
             steps {
-                build job: 'update_manifest', parameters: [string(name: 'IMAGE_TAG', value: "$env.BUILD_NUMBER")]
+                build job: 'update_manifest', parameters: [string(name: 'IMAGE_TAG', value: "${env.BUILD_NUMBER}")]
             }
         }
     }
