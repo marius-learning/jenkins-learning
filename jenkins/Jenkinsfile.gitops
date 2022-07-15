@@ -3,6 +3,7 @@ pipeline {
 
     environment {
         DOCKERHUB_CREDS=credentials("DOCKERHUB")
+        IMAGE="$DOCKERHUB_CREDS_USR/flask-app"
     }
 
     stages {
@@ -10,7 +11,7 @@ pipeline {
             steps {
                 sh """
                     cd gitops
-                    docker build -t $DOCKERHUB_CREDS_USR:${env.BUILD_NUMBER} . --no-cache
+                    docker build -t $IMAGE:$env.BUILD_NUMBER . --no-cache
                 """
             }
         }
@@ -21,7 +22,7 @@ pipeline {
         }
         stage("Push Image to DockerHub") {
             steps {
-                sh "docker push $DOCKERHUB_CREDS_USR:${env.BUILD_NUMBER}"
+                sh "docker push $IMAGE:$env.BUILD_NUMBER"
             }
         }
         stage("Delete Built Image") {
