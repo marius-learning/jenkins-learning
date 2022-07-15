@@ -7,28 +7,38 @@ pipeline {
 
     stages {
         stage("Build Image") {
-            sh """
-                cd gitops
-                docker build -t $DOCKERHUB_CREDS_USR:$env.BUILD_NUMBER . --no-cache
-            """
+            steps {
+                sh """
+                    cd gitops
+                    docker build -t $DOCKERHUB_CREDS_USR:$env.BUILD_NUMBER . --no-cache
+                """
+            }
         }
         stage("DockerHub Login") {
-            sh """
-                echo $DOCKERHUB_CREDS_PSW | docker login -u $DOCKERHUB_CREDS_USR --password-stdin
-            """
+            steps {
+                sh """
+                    echo $DOCKERHUB_CREDS_PSW | docker login -u $DOCKERHUB_CREDS_USR --password-stdin
+                """
+            }
         }
         stage("Push Image to DockerHub") {
-            sh """
-                docker push $DOCKERHUB_CREDS_USR:$env.BUILD_NUMBER
-            """
+            steps {
+                sh """
+                    docker push $DOCKERHUB_CREDS_USR:$env.BUILD_NUMBER
+                """
+            }
         }
         stage("Delete Built Image") {
-            sh """
-                docker rmi $(docker image -f "app=flask" -q)
-            """
+            steps {
+                sh """
+                    docker rmi $(docker image -f "app=flask" -q)
+                """
+            }
         }
         stage("Trigger Manifest Update") {
-            build job: 'update_manifest', parameters: [string(name: 'IMAGE_TAG', value: "$env.BUILD_NUMBER")]
+            steps {
+                build job: 'update_manifest', parameters: [string(name: 'IMAGE_TAG', value: "$env.BUILD_NUMBER")]
+            }
         }
     }
     post {
