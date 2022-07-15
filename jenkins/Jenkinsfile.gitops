@@ -1,0 +1,39 @@
+pipeline {
+    agent any
+
+    variables {
+        DOCKERHUB_CREDS=credentials("DOCKERHUB")
+    }
+
+    stages {
+        stage("Build Image") {
+            sh """
+                cd gitops
+                docker build -t $DOCKERHUB_CREDS_USR:$env.BUILD_NUMBER . --no-cache
+            """
+        }
+        stage("DockerHub Login") {
+            sh """
+                echo $DOCKERHUB_CREDS_PSW | docker login -u $DOCKERHUB_CREDS_USR --password-stdin
+            """
+        }
+        stage("Push Image to DockerHub") {
+            sh """
+                docker push $DOCKERHUB_CREDS_USR:$env.BUILD_NUMBER
+            """
+        }
+        stage("Delete Built Image") {
+            sh """
+                docker rmi $(docker image -f "app=flask")
+            """
+        }
+        stage("Trigger Manifest Update") {
+            build job: 'update_manifest', parameters: [string(name: 'IMAGE_TAG', value: "$env.BUILD_NUMBER")]
+        }
+    }
+    post {
+        always {
+            sh "docker logout"
+        }
+    }
+}
