@@ -9,4 +9,4 @@ def favicon():
 
 @app.route('/')
 def hello_world():
-    return 'Flask app!!!'
+    return 'Flask app v2!!!'
